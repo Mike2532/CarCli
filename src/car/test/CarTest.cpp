@@ -3,14 +3,17 @@
 #include "../Car.h"
 #include "../../engine/Engine.h"
 #include "../../gearBox/GearBox.h"
+#include "../../suspension/Suspension.h"
 
 TEST_CASE("initial state")
 {
     auto engine = std::make_unique<Engine>();
     auto gearBox = std::make_unique<GearBox>();
+    auto suspension = std::make_unique<Suspension>();
     auto car = std::make_unique<Car>(
             std::move(engine),
-            std::move(gearBox)
+            std::move(gearBox),
+            std::move(suspension)
     );
 
     std::ostringstream output;
@@ -29,9 +32,11 @@ TEST_CASE("drive")
 {
     auto engine = std::make_unique<Engine>();
     auto gearBox = std::make_unique<GearBox>();
+    auto suspension = std::make_unique<Suspension>();
     auto car = std::make_unique<Car>(
             std::move(engine),
-            std::move(gearBox)
+            std::move(gearBox),
+            std::move(suspension)
     );
 
     car->TurnOnEngine();
@@ -54,11 +59,12 @@ TEST_CASE("set -1 speed at back gear")
 {
     auto engine = std::make_unique<Engine>();
     auto gearBox = std::make_unique<GearBox>();
+    auto suspension = std::make_unique<Suspension>();
     auto car = std::make_unique<Car>(
             std::move(engine),
-            std::move(gearBox)
+            std::move(gearBox),
+            std::move(suspension)
     );
-
     car->TurnOnEngine();
     car->SetGear(-1);
 
@@ -81,9 +87,11 @@ TEST_CASE("change speed at netral gear while moving back and check direction")
 {
     auto engine = std::make_unique<Engine>();
     auto gearBox = std::make_unique<GearBox>();
+    auto suspension = std::make_unique<Suspension>();
     auto car = std::make_unique<Car>(
             std::move(engine),
-            std::move(gearBox)
+            std::move(gearBox),
+            std::move(suspension)
     );
 
     car->TurnOnEngine();

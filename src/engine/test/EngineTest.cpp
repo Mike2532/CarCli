@@ -14,8 +14,9 @@ TEST_CASE("success stop engine")
     auto engine = std::make_unique<Engine>();
 
     auto gear = GearName::NEUTRAL;
+    Speed speed = 0;
 
-    engine->TurnOffEngine(gear);
+    engine->TurnOffEngine(speed, gear);
     REQUIRE(!engine->IsEngineTurningOn());
 }
 
@@ -25,10 +26,11 @@ TEST_CASE("failed stop engine (not neutral gear)")
     engine->TurnOnEngine();
 
     auto gear = GearName::FIRST;
+    Speed speed = 0;
 
     try
     {
-        engine->TurnOffEngine(gear);
+        engine->TurnOffEngine(speed, gear);
         FAIL("Exception was not thrown");
     }
     catch (const std::runtime_error& e)
@@ -43,77 +45,15 @@ TEST_CASE("failed stop engine (on drive)")
     engine->TurnOnEngine();
 
     auto gear = GearName::FIRST;
-
-    engine->SetSpeed(gear, 10);
+    Speed speed = 15;
 
     try
     {
-        engine->TurnOffEngine(gear);
+        engine->TurnOffEngine(speed, gear);
         FAIL("Exception was not thrown");
     }
     catch (const std::runtime_error& e)
     {
         REQUIRE(std::string(e.what()) == "can not turn on drive");
     }
-}
-
-TEST_CASE("change speed of incative engine")
-{
-    auto engine = std::make_unique<Engine>();
-
-    auto gear = GearName::FIRST;
-    Speed speed = 15;
-
-    try
-    {
-        engine->SetSpeed(gear, speed);
-        FAIL("Exception was not thrown");
-    }
-    catch (const std::runtime_error& e)
-    {
-        REQUIRE(std::string(e.what()) == "can not change speed of inactive engine");
-    }
-}
-
-
-TEST_CASE("set positive speed and check direction")
-{
-    auto engine = std::make_unique<Engine>();
-    engine->TurnOnEngine();
-
-    auto gear = GearName::FIRST;
-
-    Speed speed = 15;
-
-    engine->SetSpeed(gear, speed);
-    REQUIRE(engine->GetSpeed() == speed);
-    REQUIRE(engine->GetDirection() == Direction::FORWARD);
-}
-
-TEST_CASE("set zero speed and check direction")
-{
-    auto engine = std::make_unique<Engine>();
-    engine->TurnOnEngine();
-
-    auto gear = GearName::FIRST;
-
-    Speed speed = 0;
-
-    engine->SetSpeed(gear, speed);
-    REQUIRE(engine->GetSpeed() == speed);
-    REQUIRE(engine->GetDirection() == Direction::NONE);
-}
-
-TEST_CASE("set reverse speed and check direction")
-{
-    auto engine = std::make_unique<Engine>();
-    engine->TurnOnEngine();
-
-    auto gear = GearName::REVERSE;
-
-    Speed speed = 10;
-
-    engine->SetSpeed(gear, speed);
-    REQUIRE(engine->GetSpeed() == speed);
-    REQUIRE(engine->GetDirection() == Direction::BEHIND);
 }

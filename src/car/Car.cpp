@@ -8,25 +8,26 @@ void Car::TurnOnEngine()
 
 void Car::TurnOffEngine()
 {
+    auto speed = suspension->GetSpeed();
     auto gear = gearBox->GetCurGearName();
-    engine->TurnOffEngine(gear);
+    engine->TurnOffEngine(speed, gear);
 }
 
 void Car::SetSpeed(Speed speed)
 {
-    engine->ValidateStateToSpeedChange();
+    engine->RequireEngineWorks();
 
-    auto curSpeed = engine->GetSpeed();
+    auto curSpeed = suspension->GetSpeed();
     gearBox->IsSpeedValid(curSpeed, speed);
 
     auto curGear = gearBox->GetCurGearName();
-    engine->SetSpeed(curGear, speed);
+    suspension->SetSpeed(curGear, speed);
 }
 
 void Car::SetGear(GearNum gearNum)
 {
-    auto speed = engine->GetSpeed();
-    auto direction = engine->GetDirection();
+    auto speed = suspension->GetSpeed();
+    auto direction = suspension->GetDirection();
     gearBox->SetGear(gearNum, speed, direction);
 }
 
@@ -34,7 +35,7 @@ void Car::PrintState(std::ostream& output)
 {
     output << "Engine: " << GetEngineState() << std::endl <<
             "Direction: " << GetDirectionState() << std::endl <<
-            "Speed: " << engine->GetSpeed() << std::endl <<
+            "Speed: " << suspension->GetSpeed() << std::endl <<
             "Gear: " << GetGearBoxState() << std::endl;
 }
 
@@ -47,7 +48,7 @@ std::string Car::GetEngineState()
 
 std::string Car::GetDirectionState()
 {
-    auto direction = engine->GetDirection();
+    auto direction = suspension->GetDirection();
     switch (direction)
     {
         case Direction::BEHIND:

@@ -20,6 +20,8 @@ add_executable(
         src/types.h
         src/cli/CLI.cpp
         src/cli/CLI.h
+        src/suspension/Suspension.cpp
+        src/suspension/Suspension.h
 )
 
 add_executable(
@@ -50,6 +52,7 @@ add_executable(
         src/suspension/Suspension.cpp
         src/suspension/Suspension.h
         src/suspension/ISuspension.h
+        src/suspension/test/SuspensionTest.cpp
 )
 
 add_executable(
@@ -57,6 +60,22 @@ add_executable(
         DestructorTest.cpp
 )
 
+add_executable(
+        SuspensionTest
+        src/suspension/test/SuspensionTest.cpp
+        src/suspension/Suspension.cpp
+        src/suspension/Suspension.h
+)
+
 target_link_libraries(GearBoxTest PRIVATE Catch2::Catch2WithMain)
 target_link_libraries(EngineTest PRIVATE Catch2::Catch2WithMain)
 target_link_libraries(CarTest PRIVATE Catch2::Catch2WithMain)
+target_link_libraries(SuspensionTest PRIVATE Catch2::Catch2WithMain)
+
+
+enable_testing()
+
+add_test(NAME GearBoxTest COMMAND GearBoxTest)
+add_test(NAME EngineTest COMMAND EngineTest)
+add_test(NAME CarTest COMMAND CarTest)
+add_test(NAME SuspensionTest COMMAND SuspensionTest)

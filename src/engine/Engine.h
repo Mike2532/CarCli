@@ -7,18 +7,14 @@ class Engine : public IEngine
 {
 public:
     void TurnOnEngine() override;
-    void TurnOffEngine(GearName curGear) override;
+    void TurnOffEngine(Speed speed, GearName curGear) override;
     bool IsEngineTurningOn() override;
-    Direction GetDirection() override;
-    Speed GetSpeed() override;
-    void SetSpeed(GearName gearName, Speed newSpeed) override;
-    void ValidateStateToSpeedChange() override;
+    void RequireEngineWorks() override;
 private:
-    Direction direction = Direction::NONE;
-    Speed speed = 0;
-    bool isTurningOn = false;
+    void RequireZeroSpeed(Speed speed);
+    void RequireNeutralGear(GearName curGear);
 
-    void UpdateDirection(GearName gearName);
+    bool isTurningOn = false;
 };
 
 #endif//OOP_3_2_ENGINE_H

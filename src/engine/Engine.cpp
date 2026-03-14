@@ -1,50 +1,5 @@
 #include "Engine.h"
 
-void Engine::UpdateDirection(GearName gearName)
-{
-    if (speed == 0)
-    {
-        direction = Direction::NONE;
-        return;
-    }
-    if (gearName == GearName::NEUTRAL)
-    {
-        return;
-    }
-    if (gearName == GearName::REVERSE)
-    {
-        direction = Direction::BEHIND;
-        return;
-    }
-    direction = Direction::FORWARD;
-}
-
-void Engine::SetSpeed(GearName gearName, Speed newSpeed)
-{
-    if (!isTurningOn)
-    {
-        throw std::runtime_error("can not change speed of inactive engine");
-    }
-
-    speed = newSpeed;
-    UpdateDirection(gearName);
-}
-
-bool Engine::IsEngineTurningOn()
-{
-    return isTurningOn;
-}
-
-Direction Engine::GetDirection()
-{
-    return direction;
-}
-
-Speed Engine::GetSpeed()
-{
-    return speed;
-}
-
 void Engine::TurnOnEngine()
 {
     if (isTurningOn)
@@ -55,30 +10,47 @@ void Engine::TurnOnEngine()
     isTurningOn = true;
 }
 
-void Engine::TurnOffEngine(GearName curGear)
+void Engine::RequireEngineWorks()
+{
+    if (isTurningOn)
+    {
+        return;
+    }
+    throw std::runtime_error("error: inactive engine");
+}
+
+void Engine::TurnOffEngine(Speed speed, GearName curGear)
 {
     if (!isTurningOn)
     {
         return;
     }
 
-    if (speed != 0)
-    {
-        throw std::runtime_error("can not turn on drive");
-    }
-
-    if (curGear != GearName::NEUTRAL)
-    {
-        throw std::runtime_error("can not turn off engine non neutral gear");
-    }
+    RequireZeroSpeed(speed);
+    RequireNeutralGear(curGear);
 
     isTurningOn = false;
 }
 
-void Engine::ValidateStateToSpeedChange()
+bool Engine::IsEngineTurningOn()
 {
-    if (!isTurningOn)
+    return isTurningOn;
+}
+
+void Engine::RequireZeroSpeed(Speed speed)
+{
+    if (speed == 0)
     {
-        throw std::runtime_error("can not change speed of inactive engine");
+        return;
     }
+    throw std::runtime_error("can not turn on drive");
+}
+
+void Engine::RequireNeutralGear(GearName curGear)
+{
+    if (curGear == GearName::NEUTRAL)
+    {
+        return;
+    }
+    throw std::runtime_error("can not turn off engine non neutral gear");
 }
