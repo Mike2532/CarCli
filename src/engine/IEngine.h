@@ -10,8 +10,8 @@ public:
     virtual void TurnOnEngine() = 0;
     virtual void TurnOffEngine(GearName curGear) = 0;
     virtual bool IsEngineTurningOn() = 0;
-    virtual Direction GetDirection() = 0;
-    virtual Speed GetSpeed() = 0;
+    virtual Direction GetDirection() = 0; //за направление отвечает не двигатель
+    virtual Speed GetSpeed() = 0; //двигатель не про это
     virtual void SetSpeed(GearName gearName, Speed newSpeed) = 0;
     virtual void ValidateStateToSpeedChange() = 0;
 };

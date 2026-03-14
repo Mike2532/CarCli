@@ -5,7 +5,7 @@ GearName GearBox::GetCurGearName()
     return curGear;
 }
 
-void GearBox::SetGear(GearNum gearNum, Speed speed, Direction direction)
+void GearBox::SetGear(GearNum gearNum, Speed speed, Direction direction) //схопнуть проверки на скорость и нулевую передачу
 {
     ValidateGearNum(gearNum);
 
@@ -24,7 +24,7 @@ void GearBox::SetGear(GearNum gearNum, Speed speed, Direction direction)
 
 void GearBox::IsSpeedValid(Speed curSpeed, Speed newSpeed)
 {
-    if (curGear == GearName::Neutral)
+    if (curGear == GearName::NEUTRAL)
     {
         if (newSpeed <= curSpeed)
         {
@@ -54,8 +54,8 @@ void GearBox::SetBackGear(Speed speed)
 
 void GearBox::ValidateGearNum(GearNum gearNum)
 {
-    auto min = static_cast<GearNum>(GearName::FirstElem);
-    auto max = static_cast<GearNum>(GearName::LastElem);
+    auto min = static_cast<GearNum>(GearName::FIRST_ELEM);
+    auto max = static_cast<GearNum>(GearName::LAST_ELEM);
 
     if (gearNum < min || gearNum > max)
     {
@@ -65,7 +65,7 @@ void GearBox::ValidateGearNum(GearNum gearNum)
 
 void GearBox::ForwardGearValidate(Speed speed, Direction direction)
 {
-    if (curGear == GearName::Neutral && speed != 0 && direction == Direction::BEHIND)
+    if (curGear == GearName::NEUTRAL && speed != 0 && direction == Direction::BEHIND)
     {
         throw std::runtime_error("can not set forward gear at not zero speed from back gear");
     }
@@ -73,7 +73,7 @@ void GearBox::ForwardGearValidate(Speed speed, Direction direction)
 
 void GearBox::CheckSpeedValid(GearName gearName, Speed speed)
 {
-    if (gearName == GearName::Neutral)
+    if (gearName == GearName::NEUTRAL)
     {
         return;
     }

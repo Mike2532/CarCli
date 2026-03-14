@@ -10,14 +10,14 @@ public:
     void IsSpeedValid(Speed curSpeed, Speed newSpeed) override;
     GearName GetCurGearName() override;
 private:
-    GearName curGear = GearName::Neutral;
+    GearName curGear = GearName::NEUTRAL;
     const GearList gears = {
-            {GearName::Reverse, {0, 20}},
-            {GearName::First, {0, 30}},
-            {GearName::Second, {20, 50}},
-            {GearName::Third, {30, 60}},
-            {GearName::Fourth, {40, 90}},
-            {GearName::Fifth, {50, 150}}
+            {GearName::REVERSE, {0, 20}},
+            {GearName::FIRST, {0, 30}},
+            {GearName::SECOND, {20, 50}},
+            {GearName::THIRD, {30, 60}},
+            {GearName::FOURTH, {40, 90}},
+            {GearName::FIFTH, {50, 150}}
     };
 
     void ValidateGearNum(GearNum gearNum);

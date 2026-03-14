@@ -13,11 +13,13 @@ public:
 
     void ServeApp();
 private:
+    std::unique_ptr<ICar> car;
+
     void SayGreeting();
     void ShowCarInfo();
     void ExecuteWithErrorsHandling(std::function<void()>);
-
-    std::unique_ptr<ICar> car;
+    void ParseCommands();
+    bool HandleLine(const std::string& line);
 };
 
 

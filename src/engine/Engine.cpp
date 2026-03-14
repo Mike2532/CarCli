@@ -7,7 +7,7 @@ void Engine::UpdateDirection(GearName gearName)
         direction = Direction::NONE;
         return;
     }
-    if (gearName != GearName::Reverse)
+    if (gearName != GearName::REVERSE)
     {
         direction = Direction::FORWARD;
         return;
@@ -64,7 +64,7 @@ void Engine::TurnOffEngine(GearName curGear)
         throw std::runtime_error("can not turn on drive");
     }
 
-    if (curGear != GearName::Neutral)
+    if (curGear != GearName::NEUTRAL)
     {
         throw std::runtime_error("can not turn off engine non neutral gear");
     }

@@ -23,5 +23,36 @@ std::unique_ptr<Car> GetCar()
             std::move(gearBox)
     );
 
-    return std::move(car);
+    return car;
 }
+
+//cli не обработал ошибку парсинга числа
+
+//Info
+//Engine: on
+//Direction: none
+//Speed: 0
+//Gear: -1
+//SetSpeed -1
+//too fast
+
+//Info
+//Engine: on
+//Direction: behind
+//Speed: 10
+//Gear: -1
+//SetGear 0
+//can not set forward gear at not zero speed from back gear
+//Info
+//Engine: on
+//Direction: behind
+//Speed: 10
+//Gear: 0
+//SetSpeed 9
+//Info
+//Engine: on
+//Direction: forward
+//Speed: 9
+//Gear: 0
+//Set
+

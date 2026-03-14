@@ -13,7 +13,7 @@ TEST_CASE("success stop engine")
 {
     auto engine = std::make_unique<Engine>();
 
-    auto gear = GearName::Neutral;
+    auto gear = GearName::NEUTRAL;
 
     engine->TurnOffEngine(gear);
     REQUIRE(!engine->IsEngineTurningOn());
@@ -24,7 +24,7 @@ TEST_CASE("failed stop engine (not neutral gear)")
     auto engine = std::make_unique<Engine>();
     engine->TurnOnEngine();
 
-    auto gear = GearName::First;
+    auto gear = GearName::FIRST;
 
     try
     {
@@ -42,7 +42,7 @@ TEST_CASE("failed stop engine (on drive)")
     auto engine = std::make_unique<Engine>();
     engine->TurnOnEngine();
 
-    auto gear = GearName::First;
+    auto gear = GearName::FIRST;
 
     engine->SetSpeed(gear, 10);
 
@@ -61,7 +61,7 @@ TEST_CASE("change speed of incative engine")
 {
     auto engine = std::make_unique<Engine>();
 
-    auto gear = GearName::First;
+    auto gear = GearName::FIRST;
     Speed speed = 15;
 
     try
@@ -81,7 +81,7 @@ TEST_CASE("set positive speed and check direction")
     auto engine = std::make_unique<Engine>();
     engine->TurnOnEngine();
 
-    auto gear = GearName::First;
+    auto gear = GearName::FIRST;
 
     Speed speed = 15;
 
@@ -95,7 +95,7 @@ TEST_CASE("set zero speed and check direction")
     auto engine = std::make_unique<Engine>();
     engine->TurnOnEngine();
 
-    auto gear = GearName::First;
+    auto gear = GearName::FIRST;
 
     Speed speed = 0;
 
@@ -109,7 +109,7 @@ TEST_CASE("set reverse speed and check direction")
     auto engine = std::make_unique<Engine>();
     engine->TurnOnEngine();
 
-    auto gear = GearName::Reverse;
+    auto gear = GearName::REVERSE;
 
     Speed speed = 10;
 

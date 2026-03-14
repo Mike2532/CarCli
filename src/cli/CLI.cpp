@@ -6,68 +6,83 @@
 void CLI::ServeApp()
 {
     SayGreeting();
+    ParseCommands();
+}
 
+void CLI::ParseCommands()
+{
     std::string line;
 
-    while (getline(std::cin, line))
+    while (getline(std::cin, line) && HandleLine(line))
+    {}
+}
+
+bool CLI::HandleLine(const std::string& line)
+{
+    if (line.empty())
     {
-        if (line.empty())
-        {
-            continue;
-        }
-
-        std::stringstream ss(line);
-        std::string firstArc;
-        ss >> firstArc;
-
-        if (firstArc == "exit")
-        {
-            break;
-        }
-        if (firstArc == "--help")
-        {
-            ShowCarInfo();
-            continue;
-        }
-        if (firstArc == "EngineOn")
-        {
-            ExecuteWithErrorsHandling([this](){
-                car->TurnOnEngine();
-            });
-            continue;
-        }
-        if (firstArc == "EngineOff")
-        {
-            ExecuteWithErrorsHandling([this](){
-                car->TurnOffEngine();
-            });
-            continue;
-        }
-        if (firstArc == "Info")
-        {
-            ExecuteWithErrorsHandling([this](){
-                car->PrintState();
-            });
-            continue;
-        }
-        if (firstArc == "SetGear" || firstArc == "SetSpeed")
-        {
-            std::string secondArc;
-            ss >> secondArc;
-            ExecuteWithErrorsHandling([this, firstArc, secondArc](){
-                auto val = stoi(secondArc);
-
-                if (firstArc == "SetGear")
-                {
-                    car->SetGear(val);
-                    return;
-                }
-                car->SetSpeed(val);
-            });
-            continue;
-        }
-        std::cout << "unknown command\n";
+        return true;
     }
+
+    std::stringstream stringstream(line);
+    std::string firstArc;
+    stringstream >> firstArc;
+
+    if (firstArc == "exit")
+    {
+        return false;
+    }
+    if (firstArc == "--help")
+    {
+        ShowCarInfo();
+        return true;
+    }
+    if (firstArc == "EngineOn")
+    {
+        ExecuteWithErrorsHandling([this](){
+            car->TurnOnEngine();
+        });
+        return true;
+    }
+    if (firstArc == "EngineOff")
+    {
+        ExecuteWithErrorsHandling([this](){
+            car->TurnOffEngine();
+        });
+        return true;
+    }
+    if (firstArc == "Info")
+    {
+        ExecuteWithErrorsHandling([this](){
+            car->PrintState();
+        });
+        return true;
+    }
+    if (firstArc == "SetGear" || firstArc == "SetSpeed")
+    {
+        std::string secondArc;
+        stringstream >> secondArc;
+        int val = 0;
+        try
+        {
+            val = stoi(secondArc);
+        } catch (const std::exception& e)
+        {
+            std::cout << "invalid second argument\n";
+            return true;
+        }
+        ExecuteWithErrorsHandling([this, firstArc, val](){
+            if (firstArc == "SetGear")
+            {
+                car->SetGear(val);
+                return;
+            }
+            car->SetSpeed(val);
+        });
+        return true;
+    }
+    std::cout << "unknown command\n";
+    return true;
 }
 
 void CLI::SayGreeting()

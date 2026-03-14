@@ -8,6 +8,7 @@
 class ICar
 {
 public:
+    virtual ~ICar() = default; //изучить для чего он тут нужен
     virtual void TurnOnEngine() = 0;
     virtual void TurnOffEngine() = 0;
     virtual void SetSpeed(Speed speed) = 0;

@@ -8,15 +8,15 @@ enum class Direction {FORWARD, BEHIND, NONE};
 
 enum class GearName
 {
-    Reverse = -1,
-    Neutral = 0,
-    First = 1,
-    Second,
-    Third,
-    Fourth,
-    Fifth,
-    FirstElem = Reverse,
-    LastElem = Fifth
+    REVERSE = -1,
+    NEUTRAL = 0,
+    FIRST = 1,
+    SECOND,
+    THIRD,
+    FOURTH,
+    FIFTH,
+    FIRST_ELEM = REVERSE,
+    LAST_ELEM = FIFTH
 };
 
 using Speed = unsigned int;
