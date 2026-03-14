@@ -19,7 +19,7 @@ enum class GearName
     LAST_ELEM = FIFTH
 };
 
-using Speed = unsigned int;
+using Speed = int;
 using GearNum = int;
 using Gear = std::pair<Speed, Speed>;
 using GearList = std::unordered_map<GearName, Gear>;

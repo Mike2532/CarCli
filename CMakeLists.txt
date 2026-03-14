@@ -47,6 +47,14 @@ add_executable(
         src/gearBox/GearBox.cpp
         src/cli/CLI.cpp
         src/cli/CLI.h
+        src/suspension/Suspension.cpp
+        src/suspension/Suspension.h
+        src/suspension/ISuspension.h
+)
+
+add_executable(
+        DestructorTest
+        DestructorTest.cpp
 )
 
 target_link_libraries(GearBoxTest PRIVATE Catch2::Catch2WithMain)

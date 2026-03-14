@@ -7,13 +7,16 @@ void Engine::UpdateDirection(GearName gearName)
         direction = Direction::NONE;
         return;
     }
-    if (gearName != GearName::REVERSE)
+    if (gearName == GearName::NEUTRAL)
     {
-        direction = Direction::FORWARD;
         return;
     }
-
-    direction = Direction::BEHIND;
+    if (gearName == GearName::REVERSE)
+    {
+        direction = Direction::BEHIND;
+        return;
+    }
+    direction = Direction::FORWARD;
 }
 
 void Engine::SetSpeed(GearName gearName, Speed newSpeed)

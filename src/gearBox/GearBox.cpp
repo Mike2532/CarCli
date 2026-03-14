@@ -12,11 +12,13 @@ void GearBox::SetGear(GearNum gearNum, Speed speed, Direction direction) //сх�
     if (gearNum == -1)
     {
         SetBackGear(speed);
+        return;
     }
 
     if (gearNum == 0)
     {
         UpdateCurGear(gearNum);
+        return;
     }
 
     SetForwardGear(gearNum, speed, direction);
@@ -48,7 +50,7 @@ void GearBox::SetBackGear(Speed speed)
     {
         throw std::runtime_error("can not set back gear at not zero speed");
     }
-    UpdateCurGear(0);
+    UpdateCurGear(-1);
 }
 
 
@@ -73,11 +75,6 @@ void GearBox::ForwardGearValidate(Speed speed, Direction direction)
 
 void GearBox::CheckSpeedValid(GearName gearName, Speed speed)
 {
-    if (gearName == GearName::NEUTRAL)
-    {
-        return;
-    }
-
     auto limits = gears.at(gearName);
     if (speed < limits.first)
     {

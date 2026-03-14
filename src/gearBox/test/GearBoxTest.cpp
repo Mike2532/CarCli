@@ -104,7 +104,7 @@ TEST_CASE("invalid speed (too slow)")
     }
     catch (const std::runtime_error& e)
     {
-        REQUIRE(std::string(e.what()) == "too fast");
+        REQUIRE(std::string(e.what()) == "too slow");
     }
 }
 
